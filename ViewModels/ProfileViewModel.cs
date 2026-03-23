@@ -64,9 +64,9 @@ namespace PerfilAlumnoMVVM.ViewModels
 
         public ProfileViewModel()
         {
-            Nombre = "Cande";
+            Nombre = "Cande Godoy";
             Edad = 22;
-            Descripcion = "Estudiante de programación";
+            Descripcion = "Tengo 22 años y estoy estudiando Programación. Empecé desde cero, pero con el tiempo me fui enganchando mucho y hoy realmente me gusta. Soy constante, curiosa y bastante detallista, siempre trato de entender bien las cosas.\r\n\r\nTrabajo mientras estudio, lo que me hizo más responsable y organizada. En lo personal soy tranquila, sociable y muy familiera. Tengo una perrita que es súper importante para mí.\r\n\r\nMe gusta aprender cosas nuevas y seguir creciendo todo el tiempo.";
             ImagenUrl = "perfil.jpeg";
             GuardarCommand = new Command(Guardar);
         }
