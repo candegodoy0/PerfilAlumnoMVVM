@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PerfilAlumnoMVVM.ViewModels"
+             x:Class="PerfilAlumnoMVVM.Views.MainPage">
+
+    <ContentPage.BindingContext>
+        <vm:ProfileViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Image Source="{Binding ImagenUrl}"
+                   HeightRequest="150"
+                   WidthRequest="150" />
+
+            <Entry Placeholder="Nombre"
+                   Text="{Binding Nombre, Mode=TwoWay}" />
+
+            <Entry Placeholder="Edad"
+                   Keyboard="Numeric"
+                   Text="{Binding Edad, Mode=TwoWay}" />
+
+            <Editor Placeholder="Descripción"
+                    HeightRequest="100"
+                    Text="{Binding Descripcion, Mode=TwoWay}" />
+
+            <Button Text="Guardar"
+                    Command="{Binding GuardarCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
+    
