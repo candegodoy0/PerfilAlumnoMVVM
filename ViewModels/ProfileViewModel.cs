@@ -4,6 +4,8 @@ using PerfilAlumnoMVVM.Models;
 
 namespace PerfilAlumnoMVVM.ViewModels
 {
+
+//Recibe parametros cuando navegamos a otra pagina
     [QueryProperty(nameof(Nombre), "nombre")]
     [QueryProperty(nameof(Edad), "edad")]
     [QueryProperty(nameof(Descripcion), "descripcion")]
@@ -26,6 +28,7 @@ namespace PerfilAlumnoMVVM.ViewModels
             }
         }
 
+//propiedades 
         public string Nombre
         {
             get => _user.Nombre;
@@ -78,11 +81,13 @@ namespace PerfilAlumnoMVVM.ViewModels
             }
         }
 
+//comandos
         public Command GuardarCommand { get; }
 
         public Command IrDetalleCommand { get; }
 
         public ProfileViewModel()
+        //datos inciales (simulacion de perfil cargado)
         {
             Nombre = "Cande Godoy";
             Edad = 22;
@@ -93,12 +98,13 @@ namespace PerfilAlumnoMVVM.ViewModels
             IrDetalleCommand = new Command(IrADetalle);
         }
 
-        //Guarda datos con valiaciones
+        //Guarda datos con valiaciones (simulacion)
         private async void Guardar()
         {
             if (!ValidarDatos()) return;
 
-            await Shell.Current.DisplayAlert("Guardado", "Datos actualizados correctamente", "OK");
+            var toast = Toask.Make("Datos actualizados correctamente", ToastDuration.Short);
+            await toast.Show();
         }
 
         // Navega a la otra pantalla
@@ -108,7 +114,9 @@ namespace PerfilAlumnoMVVM.ViewModels
 
             try
             {
-                await Shell.Current.DisplayAlert("Info", "Cargando perfil...", "OK");
+            //Feedback visual antes de navegar
+                var toast = Toast.Make("Cargando perfil...", ToastDuration.Short);
+                await toast.Show();
 
                 await Shell.Current.GoToAsync(
                     $"detalle?nombre={Nombre}&edad={Edad}&descripcion={Descripcion}&imagen={ImagenUrl}");
@@ -119,40 +127,47 @@ namespace PerfilAlumnoMVVM.ViewModels
             }
         }
 
-        private bool ValidarDatos()
+//validaciones centralizadas
+        private async Task<bool> ValidarDatos()
         {
             // Nombre vacío
             if (string.IsNullOrWhiteSpace(Nombre))
             {
-                Shell.Current.DisplayAlert("Error", "El nombre no puede estar vacío", "OK");
+                await MostrarError("El nombre no puede estar vacío");
                 return false;
             }
 
             // Nombre con números
             if (Nombre.Any(char.IsDigit))
             {
-                Shell.Current.DisplayAlert("Error", "El nombre no puede contener números", "OK");
+                await MostrarError("El nombre no puede contener números");
                 return false;
             }
 
             // Edad inválida
             if (Edad <= 0)
             {
-                Shell.Current.DisplayAlert("Error", "La edad debe ser mayor a 0", "OK");
+                await MostrarError("La edad debe ser mayor a 0");
                 return false;
             }
 
             // Descripción vacía
             if (string.IsNullOrWhiteSpace(Descripcion))
             {
-                Shell.Current.DisplayAlert("Error", "La descripción no puede estar vacía", "OK");
+                await MostrarError("La descripción no puede estar vacía");
                 return false;
             }
 
             return true;
         }
 
+//metodo reutilizable para errores
+        private async Task MostrarError(string mensaje)
+        {
+            await Shell.Current.DisplayAlert("Error", mensaje, "OK");
+        }
 
+//notificacion de cambios (binding)
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propiedad = null)
