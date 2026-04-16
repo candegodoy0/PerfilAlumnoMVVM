@@ -1,27 +1,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PerfilAlumnoMVVM.Views.DetallePage">
+             x:Class="PerfilAlumnoMVVM.Views.DetallePage"
+             BackgroundColor="#F5F5F5">
 
     <ScrollView>
         <VerticalStackLayout Padding="25" Spacing="20">
 
-            <Image Source="{Binding ImagenUrl}"
-                   HeightRequest="170"
-                   WidthRequest="170"
-                   HorizontalOptions="Center" />
+            <!-- Imagen tipo perfil -->
+                   <Frame CornerRadius="100"
+                   HeightRequest="180"
+                   WidthRequest="180"
+                   HorizontalOptions="Center"
+                   HasShadow="True">
+                <Image Source="{Binding ImagenUrl}"
+                       Aspect="AspectFill"/>
+            </Frame>
 
+            <!-- Nombre -->
             <Label Text="{Binding Nombre}"
-                   FontSize="24"
+                   FontSize="26"
                    FontAttributes="Bold"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center" 
+                   TextColor="#333"/>
 
+            <!-- Edad -->
             <Label Text="{Binding Edad, StringFormat='Edad: {0} años'}"
                    FontSize="16"
-                   HorizontalOptions="Center" />
+                   HorizontalOptions="Center"
+                  TextColor="Gray"/>
 
-            <Frame Padding="10" BorderColor="LightGray">
-                <Label Text="{Binding Descripcion}"
-                       FontSize="14" />
+            <!-- Descripción tipo tarjeta -->
+            <Frame Padding="15" 
+            CornerRadius="15"
+            BackgroundColor="White"
+            HasShadow="True">
+
+                <VerticalStackLayout>
+                    <Label Text="Sobre mí"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                   Margin="0,0,0,5"/>
+
+                    <Label Text="{Binding Descripcion}"
+                           FontSize="14"/>
+                </VerticalStackLayout>
+
             </Frame>
 
         </VerticalStackLayout>
