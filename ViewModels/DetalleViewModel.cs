@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace PerfilAlumnoMVVM.ViewModels
 {
+
+//Recibe los datos enviados dese la pantalla anterior
     [QueryProperty(nameof(Nombre), "nombre")]
     [QueryProperty(nameof(Edad), "edad")]
     [QueryProperty(nameof(Descripcion), "descripcion")]
@@ -54,6 +56,7 @@ namespace PerfilAlumnoMVVM.ViewModels
             }
         }
 
+//notifica cambios para actualizar la UI automáticamente
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string prop = null)
