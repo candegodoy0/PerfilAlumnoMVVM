@@ -45,4 +45,10 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Views\DetallePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

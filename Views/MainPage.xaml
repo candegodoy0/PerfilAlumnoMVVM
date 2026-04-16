@@ -29,6 +29,9 @@
             <Button Text="Guardar"
                     Command="{Binding GuardarCommand}" />
 
+            <Button Text="Ver perfil"
+        Command="{Binding IrDetalleCommand}" />
+            
         </VerticalStackLayout>
     </ScrollView>
 

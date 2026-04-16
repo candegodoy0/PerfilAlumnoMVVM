@@ -62,13 +62,17 @@ namespace PerfilAlumnoMVVM.ViewModels
 
         public Command GuardarCommand { get; }
 
+        public Command IrDetalleCommand { get; }
+
         public ProfileViewModel()
         {
             Nombre = "Cande Godoy";
             Edad = 22;
             Descripcion = "Tengo 22 años y estoy estudiando Programación. Empecé desde cero, pero con el tiempo me fui enganchando mucho y hoy realmente me gusta. Soy constante, curiosa y bastante detallista, siempre trato de entender bien las cosas.\r\n\r\nTrabajo mientras estudio, lo que me hizo más responsable y organizada. En lo personal soy tranquila, sociable y muy familiera. Tengo una perrita que es súper importante para mí.\r\n\r\nMe gusta aprender cosas nuevas y seguir creciendo todo el tiempo.";
             ImagenUrl = "perfil.jpeg";
+
             GuardarCommand = new Command(Guardar);
+            IrDetalleCommand = new Command(IrADetalle);
         }
 
         private async void Guardar()
@@ -102,6 +106,19 @@ namespace PerfilAlumnoMVVM.ViewModels
             }
 
             await Shell.Current.DisplayAlert("Guardado", "Datos actualizados correctamente", "OK");
+        }
+
+        private async void IrADetalle()
+        {
+            // Validación antes de navegar
+            if (string.IsNullOrWhiteSpace(Nombre))
+            {
+                await Shell.Current.DisplayAlert("Error", "Completá el nombre antes de continuar", "OK");
+                return;
+            }
+
+            // Navegación con parámetros
+            await Shell.Current.GoToAsync($"detalle?nombre={Nombre}&edad={Edad}&descripcion={Descripcion}&imagen={ImagenUrl}");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
