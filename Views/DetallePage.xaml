@@ -1,26 +1,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:PerfilAlumnoMVVM.ViewModels"
              x:Class="PerfilAlumnoMVVM.Views.DetallePage">
 
-    <ContentPage.BindingContext>
-        <vm:DetalleViewModel />
-    </ContentPage.BindingContext>
-
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="25" Spacing="20">
 
             <Image Source="{Binding ImagenUrl}"
-                   HeightRequest="150"
-                   WidthRequest="150" />
+                   HeightRequest="170"
+                   WidthRequest="170"
+                   HorizontalOptions="Center" />
 
             <Label Text="{Binding Nombre}"
-                   FontSize="20"
-                   FontAttributes="Bold" />
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
 
-            <Label Text="{Binding Edad}" />
+            <Label Text="{Binding Edad, StringFormat='Edad: {0} años'}"
+                   FontSize="16"
+                   HorizontalOptions="Center" />
 
-            <Label Text="{Binding Descripcion}" />
+            <Frame Padding="10" BorderColor="LightGray">
+                <Label Text="{Binding Descripcion}"
+                       FontSize="14" />
+            </Frame>
 
         </VerticalStackLayout>
     </ScrollView>

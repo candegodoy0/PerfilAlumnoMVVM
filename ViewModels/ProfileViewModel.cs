@@ -4,9 +4,27 @@ using PerfilAlumnoMVVM.Models;
 
 namespace PerfilAlumnoMVVM.ViewModels
 {
+    [QueryProperty(nameof(Nombre), "nombre")]
+    [QueryProperty(nameof(Edad), "edad")]
+    [QueryProperty(nameof(Descripcion), "descripcion")]
+    [QueryProperty(nameof(ImagenUrl), "imagenUrl")]
+
     public class ProfileViewModel : INotifyPropertyChanged
     {
         private UserProfile _user = new UserProfile();
+
+
+        // Mensaje para manejar errores simples 
+        private string _mensaje;
+        public string Mensaje
+        {
+            get => _mensaje;
+            set
+            {
+                _mensaje = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Nombre
         {
@@ -75,51 +93,65 @@ namespace PerfilAlumnoMVVM.ViewModels
             IrDetalleCommand = new Command(IrADetalle);
         }
 
+        //Guarda datos con valiaciones
         private async void Guardar()
+        {
+            if (!ValidarDatos()) return;
+
+            await Shell.Current.DisplayAlert("Guardado", "Datos actualizados correctamente", "OK");
+        }
+
+        // Navega a la otra pantalla
+        private async void IrADetalle()
+        {
+            if (!ValidarDatos()) return;
+
+            try
+            {
+                await Shell.Current.DisplayAlert("Info", "Cargando perfil...", "OK");
+
+                await Shell.Current.GoToAsync(
+                    $"detalle?nombre={Nombre}&edad={Edad}&descripcion={Descripcion}&imagen={ImagenUrl}");
+            }
+            catch (Exception ex)
+            {
+                Mensaje = $"Error al navegar: {ex.Message}";
+            }
+        }
+
+        private bool ValidarDatos()
         {
             // Nombre vacío
             if (string.IsNullOrWhiteSpace(Nombre))
             {
-                await Shell.Current.DisplayAlert("Error", "El nombre no puede estar vacío", "OK");
-                return;
+                Shell.Current.DisplayAlert("Error", "El nombre no puede estar vacío", "OK");
+                return false;
             }
 
             // Nombre con números
             if (Nombre.Any(char.IsDigit))
             {
-                await Shell.Current.DisplayAlert("Error", "El nombre no puede contener números", "OK");
-                return;
+                Shell.Current.DisplayAlert("Error", "El nombre no puede contener números", "OK");
+                return false;
             }
 
             // Edad inválida
             if (Edad <= 0)
             {
-                await Shell.Current.DisplayAlert("Error", "La edad debe ser mayor a 0", "OK");
-                return;
+                Shell.Current.DisplayAlert("Error", "La edad debe ser mayor a 0", "OK");
+                return false;
             }
 
             // Descripción vacía
             if (string.IsNullOrWhiteSpace(Descripcion))
             {
-                await Shell.Current.DisplayAlert("Error", "La descripción no puede estar vacía", "OK");
-                return;
+                Shell.Current.DisplayAlert("Error", "La descripción no puede estar vacía", "OK");
+                return false;
             }
 
-            await Shell.Current.DisplayAlert("Guardado", "Datos actualizados correctamente", "OK");
+            return true;
         }
 
-        private async void IrADetalle()
-        {
-            // Validación antes de navegar
-            if (string.IsNullOrWhiteSpace(Nombre))
-            {
-                await Shell.Current.DisplayAlert("Error", "Completá el nombre antes de continuar", "OK");
-                return;
-            }
-
-            // Navegación con parámetros
-            await Shell.Current.GoToAsync($"detalle?nombre={Nombre}&edad={Edad}&descripcion={Descripcion}&imagen={ImagenUrl}");
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

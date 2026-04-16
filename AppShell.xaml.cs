@@ -8,3 +8,4 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("detalle", typeof(Views.DetallePage));
     }
 }
+
