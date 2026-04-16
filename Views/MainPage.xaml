@@ -9,12 +9,18 @@
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="25" Spacing="18">
 
-            <Image Source="{Binding ImagenUrl}"
+  <Frame CornerRadius="80"
                    HeightRequest="150"
-                   WidthRequest="150" />
+                   WidthRequest="150" 
+                   Padding="0"
+                   HorizontalOptions="Center">
+            <Image Source="{Binding ImagenUrl}"
+               Aspect="AspectFill"/>
+    </Frame>
 
+    <!-- Inputs -->
             <Entry Placeholder="Nombre"
                    Text="{Binding Nombre, Mode=TwoWay}" />
 
@@ -26,11 +32,16 @@
                     HeightRequest="100"
                     Text="{Binding Descripcion, Mode=TwoWay}" />
 
+    <!-- Botones -->
             <Button Text="Guardar"
-                    Command="{Binding GuardarCommand}" />
+                    Command="{Binding GuardarCommand}"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"/>
 
             <Button Text="Ver perfil"
-        Command="{Binding IrDetalleCommand}" />
+                    Command="{Binding IrDetalleCommand}" 
+                    BackgroundColor="#2196F3"
+                    TextColor="White"/>
             
         </VerticalStackLayout>
     </ScrollView>
