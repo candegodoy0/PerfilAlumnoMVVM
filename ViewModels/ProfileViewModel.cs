@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using PerfilAlumnoMVVM.Models;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 namespace PerfilAlumnoMVVM.ViewModels
 {
@@ -101,22 +103,35 @@ namespace PerfilAlumnoMVVM.ViewModels
         //Guarda datos con valiaciones (simulacion)
         private async void Guardar()
         {
-            if (!ValidarDatos()) return;
+            if (!await ValidarDatos()) return;
 
-            var toast = Toask.Make("Datos actualizados correctamente", ToastDuration.Short);
-            await toast.Show();
+            if (DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                var toast = Toast.Make("Datos actualizados correctamente", ToastDuration.Short);
+                await toast.Show();
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Éxito", "Datos actualizados correctamente", "OK");
+            }
         }
 
         // Navega a la otra pantalla
         private async void IrADetalle()
         {
-            if (!ValidarDatos()) return;
-
+            if (!await ValidarDatos()) return;
             try
             {
-            //Feedback visual antes de navegar
-                var toast = Toast.Make("Cargando perfil...", ToastDuration.Short);
-                await toast.Show();
+                //Feedback visual antes de navegar
+                if (DeviceInfo.Platform == DevicePlatform.Android)
+                {
+                    var toast = Toast.Make("Cargando perfil...", ToastDuration.Short);
+                    await toast.Show();
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Info", "Cargando perfil...", "OK");
+                }
 
                 await Shell.Current.GoToAsync(
                     $"detalle?nombre={Nombre}&edad={Edad}&descripcion={Descripcion}&imagen={ImagenUrl}");

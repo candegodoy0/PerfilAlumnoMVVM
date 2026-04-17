@@ -7,11 +7,13 @@
         <VerticalStackLayout Padding="25" Spacing="20">
 
             <!-- Imagen tipo perfil -->
-                   <Frame CornerRadius="100"
+                   <Frame CornerRadius="90"
                    HeightRequest="180"
                    WidthRequest="180"
+                   Padding="0"
                    HorizontalOptions="Center"
-                   HasShadow="True">
+                   IsClippedToBounds="True">
+                       
                 <Image Source="{Binding ImagenUrl}"
                        Aspect="AspectFill"/>
             </Frame>
@@ -42,7 +44,8 @@
                    Margin="0,0,0,5"/>
 
                     <Label Text="{Binding Descripcion}"
-                           FontSize="14"/>
+                           FontSize="14"
+                           TextColor="#555"/>
                 </VerticalStackLayout>
 
             </Frame>
